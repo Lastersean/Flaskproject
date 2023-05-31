@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+
+{% endblock %}
+{% block content %}
+<h1>Pokemon Search</h1>
+
+<p>Which pokemon would you like to learn about?</p>
+    <form action="" method="POST">
+        
+        
+        {{form.hidden_tag()}}
+        {{form.poke_request}}
+        {{form.submit_1}}
+        
+        
+    </form>
+    
+    
+    {%if pokemon_dict%}
+       
+    <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Pokemon</th>
+            <th scope="col">Base Experience</th>
+            <th scope="col">Ability</th>
+            <th scope="col">Sprite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{pokemon_dict['Pokemon Index']}}</th>
+            <td>{{pokemon_dict['pokemon name']}}</td>
+            <td>{{pokemon_dict['Base Experience']}}</td>
+            <td>{{pokemon_dict['Ability']}}</td>
+          </tr>
+         </tbody>
+      </table>
+      {%endif%}
+    
+
+{% endblock %}

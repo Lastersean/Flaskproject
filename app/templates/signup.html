@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+
+{% endblock %}
+{% block content %}
+    
+        
+   <div id="form-container_1">
+        <div>
+            <form action="" method="POST">
+                    {{form.hidden_tag()}}
+                <div>
+                    <div class="form-group" >
+                        {{form.first_name.label}}
+                        {{form.first_name(class="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.last_name.label}}
+                        {{form.last_name(class="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.email.label}}
+                        {{form.email(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{form.password.label}}
+                        {{form.password(class="form-control") }}
+                    </div>
+                    <div>
+                        {{form.confirm_password.label}}
+                        {{form.confirm_password(class="form-control")}}
+                    </div>
+                    
+                    <div class ="logbtn"> {{form.submit_2(class="btn btn-primary")}}</div>
+                </div>      
+            </form>
+                
+            
+        </div>
+   </div>    
+   
+ 
+ 
+{% endblock %}
