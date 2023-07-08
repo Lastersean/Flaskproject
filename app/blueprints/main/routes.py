@@ -1,13 +1,19 @@
-from flask import request, render_template
+from flask import request, render_template, flash,redirect,url_for
 import requests
 from app.blueprints.main.forms import PokeForm
 from . import main
-from flask_login import login_required
+from flask_login import login_required, current_user
+from app.models import Pokemon, User
+
+
 
 @main.route('/')
 @main.route('/home')
 def home():
-    return render_template('home.html')
+    pokes=Pokemon.query.all()
+    print(pokes)    
+    
+    return render_template('home.html', pokes=pokes )
 
 @main.route('/user/<username>')
 def username(username):
@@ -34,7 +40,7 @@ def pokemon():
                 'pokemon name': pokemon_name, 
                 'Base Experience': response.json()['base_experience'],
                 'Ability': response.json()['abilities'][0]['ability']['name'],
-                'Sprite' : response.json()['sprites']['back_default'],
+                'Sprite' : response.json()['sprites']['other']['home']['front_shiny'],
                 'Pokemon Index': response.json()['id']
             }
             
@@ -43,3 +49,31 @@ def pokemon():
 # add bootstrap table later
 
 
+@main.route('/catch/<pokename>', methods=['GET', 'POST'])
+def catch(pokename):
+    print(pokename)
+    poke= Pokemon.query.get(pokename)
+    if not poke:
+        url = f'https://pokeapi.co/api/v2/pokemon/{pokename}' 
+        response = requests.get(url)
+        if response.status_code == 200:
+            
+            pokemon_name = response.json()['forms'][0]['name']
+            pokemon_dict = {
+                'pokemon name': pokemon_name, 
+                'Base Experience': response.json()['base_experience'],
+                'Ability': response.json()['abilities'][0]['ability']['name'],
+                'Sprite' : response.json()['sprites']['other']['home']['front_shiny'],
+                'Pokemon Index': response.json()['id']
+            }
+
+            
+
+        poke=Pokemon()
+        poke.from_dict(pokemon_dict)
+        poke.save()
+
+    current_user.add_team(poke)
+    
+    flash('Pokemon successfully caught', 'sucess')
+    return redirect(url_for('main.home'))

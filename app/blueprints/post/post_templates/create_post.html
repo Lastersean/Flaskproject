@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{%block title%}
+Creat a Post
+{%endblock%}
+
+{%block content%}
+<div id="form-container_1">
+    <div>
+        <form action="" method="POST">
+                {{form.hidden_tag()}}
+            <div>
+                <div class="form-group" >
+                    {{form.img_url.label}}
+                    {{form.img_url(class="form-control")}}
+                </div>
+                <div class="form-group">
+                    {{form.title.label}}
+                    {{form.title(class="form-control")}}
+                </div>
+                <div class="form-group">
+                    {{form.caption.label}}
+                    {{form.caption(class="form-control") }}
+                </div>
+                
+                <div class ="logbtn"> {{form.submit(class="btn btn-primary")}}</div>
+            </div>      
+        </form>
+            
+        
+    </div>
+</div>    
+
+{%endblock%}

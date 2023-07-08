@@ -4,4 +4,23 @@
 {% endblock %}
 {% block content %}
 <h1>This is the Home Page</h1>
+
+
+{%if pokes%}
+{%for poke in pokes%}
+
+
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{poke.sprite}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{poke.name}}</h5>
+      <p class="card-text">Base Experience: {{poke.base_experience}}</p>
+      <p class="card-text">Ability: {{poke.ability}}</p>
+      
+
+    </div>
+  </div>
+  {%endfor%}
+  {%endif%}
+
 {% endblock %}
