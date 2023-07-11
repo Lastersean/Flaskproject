@@ -10,7 +10,7 @@ from app.models import Pokemon, User
 @main.route('/')
 @main.route('/home')
 def home():
-    pokes=Pokemon.query.all()
+    pokes=current_user.pokemon.all()
     print(pokes)    
     
     return render_template('home.html', pokes=pokes )
@@ -52,12 +52,16 @@ def pokemon():
 @main.route('/catch/<pokename>', methods=['GET', 'POST'])
 def catch(pokename):
     print(pokename)
+    if len(current_user.pokemon.all()) >= 5:
+        flash('Your team is full', 'warning')
+        return redirect(url_for('main.home'))
+
     poke= Pokemon.query.get(pokename)
     if not poke:
         url = f'https://pokeapi.co/api/v2/pokemon/{pokename}' 
         response = requests.get(url)
-        if response.status_code == 200:
-            
+        if response.status_code == 200:           
+           
             pokemon_name = response.json()['forms'][0]['name']
             pokemon_dict = {
                 'pokemon name': pokemon_name, 
@@ -72,7 +76,9 @@ def catch(pokename):
         poke=Pokemon()
         poke.from_dict(pokemon_dict)
         poke.save()
-
+    if poke in current_user.pokemon.all():
+        flash('Pokemon already on your team', 'warning')
+        return redirect(url_for('main.home'))
     current_user.add_team(poke)
     
     flash('Pokemon successfully caught', 'sucess')
