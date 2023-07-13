@@ -1,9 +1,22 @@
+body{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjG9dIzOs1f2vVcRmxtnWbLF6Lrr54Tw8Anw&usqp=CAU);
+}
+
+#connav{
+    background-color:rgba(202, 218, 74) ;
+}
+button#nav_btn{
+    background-color:rgba(234, 126, 98) ;
+    color:black ;
+    
+}
+
 #form-container {
     position: absolute;
     top:  50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background-color: black;
+    background-color:rgba(179, 116, 98);
     color: white;
     width: 25rem;
     padding:2rem;
@@ -21,7 +34,7 @@
     top:  60%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background-color: black;
+    background-color:rgba(179, 116, 98);
     color: white;
     width: 25rem;
     padding:2rem;
@@ -35,7 +48,12 @@
 
 .logbtn {
     padding-top: 2rem;
+    
 
+}
+.btn{
+    background-color: rgba(103, 95, 64);
+    color: white;
 }
 
 .form-text {

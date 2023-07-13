@@ -29,6 +29,7 @@ def create_app():
     login_manager.login_view='auth.login'
     login_manager.login_message = 'You must be logged in to visit this page'
     login_manager.login_message_category= 'warning'
+    
 
     # importing blueprints
     from app.blueprints.main import main

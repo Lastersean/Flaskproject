@@ -6,10 +6,7 @@ from werkzeug.security import generate_password_hash
 
 
 
-team=db.Table('team',
-     db.Column('trainer_id', db.Integer,db.ForeignKey('user.id')),  
-     db.Column('pokemon_name', db.String,db.ForeignKey('pokemon.name')),       
-              )
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True )
@@ -18,16 +15,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String)
     created_on = db.Column(db.DateTime, default= datetime.utcnow)
-    pokemon= db.relationship('Pokemon',secondary=team, backref='trainer', lazy='dynamic')
     post= db.relationship('Post',backref='author', lazy='dynamic')
 
-    def add_team(self, poke):
-        self.pokemon.append(poke)
-        db.session.commit()
-
-    def release(self,poke):
-        self.pokemon.remove(poke)
-        db.session.commit()
+    
 
     
 
@@ -46,22 +36,8 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(user_id)
 
-class Pokemon(db.Model):
-    name= db.Column(db.String, primary_key=True)
-    base_experience= db.Column(db.Integer,nullable=False)
-    ability=  db.Column(db.String,nullable=False)
-    sprite= db.Column(db.String,nullable=False)
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def from_dict(self, pokedata):
-        self.name= pokedata['pokemon name']
-        self.base_experience= pokedata['Base Experience']
-        self.ability= pokedata['Ability']
-        self.sprite= pokedata['Sprite']
-
+    
 class Post(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     img_url=db.Column(db.String)
